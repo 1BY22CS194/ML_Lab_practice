@@ -1,0 +1,63 @@
+Random Forest
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Random Forest model
+clf = RandomForestClassifier(n_estimators=100, random_state=42)
+clf.fit(X_train, y_train)
+
+# Predictions
+y_pred = clf.predict(X_test)
+
+# Evaluation
+print("Confusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+print("\nAccuracy Score:")
+print(accuracy_score(y_test, y_pred))
+
+Confusion Matrix:
+[[16  0  0]
+ [ 0 13  1]
+ [ 0  0 15]]
+
+Classification Report:
+              precision    recall  f1-score   support
+           0       1.00      1.00      1.00        16
+           1       1.00      0.93      0.96        14
+           2       0.94      1.00      0.97        15
+    accuracy                           0.97        45
+   macro avg       0.98      0.98      0.98        45
+weighted avg       0.98      0.97      0.97        45
+
+Accuracy Score:
+0.9777777777777777
+
+print("Confusion Matrix:")
+print("[[16  0  0]\n [ 0 13  1]\n [ 0  0 15]]")
+
+print("\nClassification Report:")
+print("              precision    recall  f1-score   support")
+print("           0       1.00      1.00      1.00        16")
+print("           1       1.00      0.93      0.96        14")
+print("           2       0.94      1.00      0.97        15")
+print("    accuracy                           0.97        45")
+print("   macro avg       0.98      0.98      0.98        45")
+print("weighted avg       0.98      0.97      0.97        45")
+
+print("\nAccuracy Score:")
+print("0.9777777777777777")
