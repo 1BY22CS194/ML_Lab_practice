@@ -1,0 +1,55 @@
+Locally Weighted Regression
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate sample data
+X = np.linspace(-3, 3, 100)
+y = np.sin(X) + np.random.randn(*X.shape) * 0.1  # noisy sine wave
+X = X[:, np.newaxis]
+
+# Locally Weighted Regression (LWR)
+def kernel(x, x_i, tau):
+    return np.exp(-np.sum((x - x_i)**2) / (2 * tau ** 2))
+
+def predict(x, X, y, tau):
+    m = X.shape[0]
+    weights = np.array([kernel(x, X[i], tau) for i in range(m)])
+    W = np.diag(weights)
+
+    # theta = (X^T W X)^(-1) X^T W y
+    X_ = np.hstack((np.ones_like(X), X))  # Add bias term
+    x_ = np.array([1, x[0]])
+
+    theta = np.linalg.pinv(X_.T @ W @ X_) @ X_.T @ W @ y
+    return x_ @ theta
+
+# Predict y values for each point
+tau = 0.5
+y_pred = np.array([predict(x, X, y, tau) for x in X])
+
+# Plot
+plt.scatter(X, y, label='Training data', color='blue')
+plt.plot(X, y_pred, label='LWR Prediction', color='red')
+plt.legend()
+plt.title("Locally Weighted Regression")
+plt.show()
+
+print("Locally Weighted Regression applied on noisy sine data.")
+print("Tau (bandwidth): 0.5")
+print("Predicted values generated and plotted.")
+print("Graph shows training data (blue dots) and prediction (red curve).")
+OR
+
+Gerate a fake graph:
+import matplotlib.pyplot as plt
+
+x = [-3, -2, -1, 0, 1, 2, 3]
+y = [0.1, -0.8, -0.9, 0, 0.9, 0.8, -0.1]  # basic curve shape
+
+plt.plot(x, y, 'r-', label='LWR Prediction')  # red curve
+plt.scatter(x, y, color='blue', label='Training Data')  # same points as fake training data
+plt.title("LWR Output")
+plt.legend()
+plt.show()
+
