@@ -1,0 +1,53 @@
+make a data.csv file in file explorer:
+X,Y
+1,2
+1.5,1.8
+5,8
+8,8
+1,0.6
+9,11
+
+
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+import matplotlib.pyplot as plt
+
+# Load the data
+data = pd.read_csv('data.csv')
+X = data.values
+
+# K-Means Clustering
+kmeans = KMeans(n_clusters=2, random_state=0)
+kmeans_labels = kmeans.fit_predict(X)
+
+# EM Clustering using Gaussian Mixture
+gmm = GaussianMixture(n_components=2, random_state=0)
+gmm_labels = gmm.fit_predict(X)
+
+# Print cluster assignments
+print("K-Means Cluster Labels:")
+print(kmeans_labels)
+print("\nEM (GMM) Cluster Labels:")
+print(gmm_labels)
+
+# Optional: Compare visually
+plt.scatter(X[:, 0], X[:, 1], c=kmeans_labels, cmap='viridis')
+plt.title("K-Means Clustering")
+plt.show()
+
+plt.scatter(X[:, 0], X[:, 1], c=gmm_labels, cmap='plasma')
+plt.title("EM Clustering (GMM)")
+plt.show()
+
+print("K-Means Cluster Labels:")
+print("[0 0 1 1 0 1]")
+
+print("\nEM (GMM) Cluster Labels:")
+print("[1 1 0 0 1 0]")
+
+K-Means Cluster Labels:
+[0 0 1 1 0 1]
+
+EM (GMM) Cluster Labels:
+[1 1 0 0 1 0]
