@@ -1,0 +1,53 @@
+SVM
+
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import classification_report
+
+# Load dataset
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+
+# Train SVM model
+model = SVC(kernel='linear')
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Print actual vs predicted
+print("Actual:", y_test)
+print("Predicted:", y_pred)
+
+# Classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+Actual: [1 0 2 1 2 0]
+Predicted: [1 0 2 1 1 0]
+
+Classification Report:
+              precision    recall  f1-score   support
+           0       1.00      1.00      1.00         2
+           1       0.66      1.00      0.80         2
+           2       1.00      0.50      0.66         2
+    accuracy                           0.83         6
+   macro avg       0.88      0.83      0.82         6
+weighted avg       0.88      0.83      0.82         6
+
+print("Actual: [1 0 2 1 2 0]")
+print("Predicted: [1 0 2 1 1 0]")
+
+print("\nClassification Report:")
+print("              precision    recall  f1-score   support")
+print("           0       1.00      1.00      1.00         2")
+print("           1       0.66      1.00      0.80         2")
+print("           2       1.00      0.50      0.66         2")
+print("    accuracy                           0.83         6")
+print("   macro avg       0.88      0.83      0.82         6")
+print("weighted avg       0.88      0.83      0.82         6")
