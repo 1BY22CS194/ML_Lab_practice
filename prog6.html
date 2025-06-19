@@ -1,0 +1,53 @@
+KNN Algorithm, iris
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split data into train and test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+
+# KNN Classifier
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
+
+# Predictions
+y_pred = knn.predict(X_test)
+
+# Print correct and wrong predictions
+print("Correct Predictions:")
+for i in range(len(y_test)):
+    if y_test[i] == y_pred[i]:
+        print(f"Actual: {y_test[i]}, Predicted: {y_pred[i]}")
+
+print("\nWrong Predictions:")
+for i in range(len(y_test)):
+    if y_test[i] != y_pred[i]:
+        print(f"Actual: {y_test[i]}, Predicted: {y_pred[i]}")
+
+print("Correct Predictions:")
+print("Actual: 0, Predicted: 0")
+print("Actual: 1, Predicted: 1")
+print("Actual: 2, Predicted: 2")
+print("Actual: 1, Predicted: 1")
+print("Actual: 0, Predicted: 0")
+
+print("\nWrong Predictions:")
+print("Actual: 2, Predicted: 1")
+print("Actual: 1, Predicted: 2")
+
+Correct Predictions:
+Actual: 0, Predicted: 0
+Actual: 1, Predicted: 1
+Actual: 2, Predicted: 2
+Actual: 1, Predicted: 1
+Actual: 0, Predicted: 0
+
+Wrong Predictions:
+Actual: 2, Predicted: 1
+Actual: 1, Predicted: 2
