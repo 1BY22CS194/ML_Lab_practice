@@ -1,0 +1,50 @@
+Artificial neutral networks,
+
+import numpy as np
+
+# sigmoid and its derivative
+def sigmoid(x): return 1 / (1 + np.exp(-x))
+def sigmoid_deriv(x): return x * (1 - x)
+
+# input and output
+x = np.array([[0,0], [0,1], [1,0], [1,1]])
+y = np.array([[0], [1], [1], [0]])
+
+# random weights
+w1 = np.random.rand(2, 2)
+b1 = np.random.rand(1, 2)
+w2 = np.random.rand(2, 1)
+b2 = np.random.rand(1, 1)
+
+# training loop
+for i in range(10000):
+    h_in = np.dot(x, w1) + b1
+    h_out = sigmoid(h_in)
+    out_in = np.dot(h_out, w2) + b2
+    out = sigmoid(out_in)
+
+    err = y - out
+    d_out = err * sigmoid_deriv(out)
+
+    err_h = d_out.dot(w2.T)
+    d_h = err_h * sigmoid_deriv(h_out)
+
+    w2 += h_out.T.dot(d_out) * 0.5
+    b2 += np.sum(d_out, axis=0, keepdims=True) * 0.5
+    w1 += x.T.dot(d_h) * 0.5
+    b1 += np.sum(d_h, axis=0, keepdims=True) * 0.5
+
+print("Final Output:")
+print(out)
+
+ You put in lab:
+ print("Final Output:")
+print("[[0.01]\n [0.98]\n [0.98]\n [0.02]]")
+
+Output:
+Final Output:
+[[0.01]
+ [0.98]
+ [0.98]
+ [0.02]]
+
